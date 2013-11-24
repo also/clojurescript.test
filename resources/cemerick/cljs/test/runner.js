@@ -13,16 +13,11 @@ for (var i = 1; i < sys.args.length; i++) {
 }
 
 p.onConsoleMessage = function (x) {
-  var line = x.toString();
-  if (line !== "[NEWLINE]") {
-    console.log(line.replace(/\[NEWLINE\]/g, "\n"));
-  }
+  console.log(x.toString());
 };
 
 p.evaluate(function () {
-  cemerick.cljs.test.set_print_fn_BANG_(function(x) {
-    console.log(x.replace(/\n/g, "[NEWLINE]")); // since console.log *itself* adds a newline
-  });
+  cemerick.cljs.test.enable_console_print_BANG_();
 });
 
 var success = p.evaluate(function () {

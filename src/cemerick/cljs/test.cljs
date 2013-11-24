@@ -1,7 +1,7 @@
 (ns cemerick.cljs.test
   (:require-macros [cemerick.cljs.test :refer (with-test-out)])
   (:require [clojure.string :as str])
-  (:refer-clojure :exclude (set-print-fn!)))
+  (:refer-clojure :exclude (set-print-fn! enable-console-print!)))
 
 ;;; GLOBALS USED BY THE REPORTING FUNCTIONS
 
@@ -256,3 +256,5 @@
 
 (defn ^:export set-print-fn! [f]
   (set! cljs.core.*print-fn* f))
+
+(def ^:export enable-console-print! cljs.core.enable-console-print!)
