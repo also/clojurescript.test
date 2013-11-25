@@ -19,6 +19,6 @@
   [& args]
   (let [fs (js/require "fs")]
    (doseq [arg args]
-     (let [code (if ((aget fs "existsSync") arg) ((aget fs "readFileSync") arg "utf8") arg)]
+     (let [code (if (try ((aget fs "statSync") arg) (catch js/Error _ false)) ((aget fs "readFileSync") arg "utf8") arg)]
        (.call (js/eval (str "(function() {" code "})")) js/global)))
     (run-all-tests)))
