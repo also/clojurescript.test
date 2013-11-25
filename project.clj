@@ -10,6 +10,11 @@
   :plugins [[lein-cljsbuild "1.0.0"]]
 
   :cljsbuild {:builds [{:source-paths ["src" "test"]
+                        :compiler {:output-to "target/cljs/unoptimized.js"
+                                   :output-dir "target/cljs/unoptimized"
+                                   :optimizations :none
+                                   :pretty-print true}}
+                       {:source-paths ["src" "test"]
                         :compiler {:output-to "target/cljs/whitespace.js"
                                    :optimizations :whitespace
                                    :pretty-print true}}
