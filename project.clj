@@ -27,15 +27,15 @@
                                    :optimizations :advanced
                                    :pretty-print true}}]
               :test-commands {"phantom-whitespace" ["phantomjs" :runner
-                                                    "window.literal_js_was_evaluated=true"
+                                                    "this.literal_js_was_evaluated=true"
                                                     "target/cljs/whitespace.js"
                                                     "test/cemerick/cljs/test/extra_test_command_file.js"]
                               "phantom-simple" ["phantomjs" :runner
-                                                "window.literal_js_was_evaluated=true"
+                                                "this.literal_js_was_evaluated=true"
                                                 "target/cljs/simple.js"
                                                 "test/cemerick/cljs/test/extra_test_command_file.js"]
                               "phantom-advanced" ["phantomjs" :runner
-                                                  "window.literal_js_was_evaluated=true"
+                                                  "this.literal_js_was_evaluated=true"
                                                   "target/cljs/advanced.js"
                                                   "test/cemerick/cljs/test/extra_test_command_file.js"]}}
 
