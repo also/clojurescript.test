@@ -14,3 +14,11 @@
 (defn ^:export run-all-tests
   [& args]
   (run test/run-all-tests (map re-pattern args)))
+
+(defn ^:export runner
+  [& args]
+  (let [fs (js/require "fs")]
+   (doseq [arg args]
+     (let [code (if (fs/existsSync arg) (fs/readFileSync arg "utf8") arg)]
+       (.call (js/eval (str "(function() {" code "})")) js/global)))
+    (run-all-tests)))
