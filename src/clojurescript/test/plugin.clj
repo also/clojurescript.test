@@ -18,6 +18,16 @@
                  version))
     version))
 
+(defn- extract-runner [name]
+  (let [runner (File/createTempFile "test-runner" ".js")
+        runner-path (.getAbsolutePath runner)]
+    (.deleteOnExit runner)
+    ; if we end up packaging multiple runner scripts, there's a (weak)
+    ; correspondence set up between the keywords being replaced and the resource
+    ; path...
+    (copy (slurp (resource (str "cemerick/cljs/test/" name ".js"))) runner)
+    runner-path))
+
 (defn middleware
   "Does two things:
 
@@ -25,16 +35,12 @@
 for string path to the packaged runner.js.
 2. Add [com.cemerick/clojurescript-test \"CURRENT_VERSION\"] as a project dependency."
   [project]
-  (let [runner (File/createTempFile "test-runner" ".js")
-        runner-path (.getAbsolutePath runner)]
-    (.deleteOnExit runner)
-    ; if we end up packaging multiple runner scripts, there's a (weak)
-    ; correspondence set up between the keywords being replaced and the resource
-    ; path...
-    (copy (slurp (resource "cemerick/cljs/test/runner.js")) runner)
+  (let [phantom-runner-path (extract-runner "runner")
+        node-runner-path (extract-runner "node-runner")]
     (-> project
         (update-in [:dependencies]
                    (fnil into [])
                    [['com.cemerick/clojurescript.test version]])
         (update-in [:cljsbuild :test-commands]
-                   #(postwalk-replace {:runner runner-path} %)))))
+                   #(postwalk-replace {:runner phantom-runner-path
+                                       :node-runner node-runner-path} %)))))

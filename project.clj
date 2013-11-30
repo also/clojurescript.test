@@ -37,7 +37,11 @@
                               "phantom-advanced" ["phantomjs" :runner
                                                   "this.literal_js_was_evaluated=true"
                                                   "target/cljs/advanced.js"
-                                                  "test/cemerick/cljs/test/extra_test_command_file.js"]}}
+                                                  "test/cemerick/cljs/test/extra_test_command_file.js"]
+                              "node-simple" ["node" :node-runner
+                                               "target/cljs/simple.js"
+                                               "this.literal_js_was_evaluated=true"
+                                               "test/cemerick/cljs/test/extra_test_command_file.js"]}}
 
   :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
 
